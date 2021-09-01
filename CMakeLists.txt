@@ -2,6 +2,9 @@ cmake_minimum_required (VERSION 3.17)
 project (reflang)
 enable_testing()
 
+# enable /mp with msvc
+add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/MP>)
+
 include_directories(${CMAKE_SOURCE_DIR})
 
 set(CMAKE_CXX_STANDARD 14)
