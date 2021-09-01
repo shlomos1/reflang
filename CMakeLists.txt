@@ -1,27 +1,22 @@
-cmake_minimum_required (VERSION 2.8.7)
+cmake_minimum_required (VERSION 3.17)
 project (reflang)
 enable_testing()
 
+# enable /mp with msvc
+add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/MP>)
+
 include_directories(${CMAKE_SOURCE_DIR})
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -stdlib=libc++")
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-	set(LLVM_CONFIG true)
-	set(CLANG_INCLUDEDIR "C:/Program Files (x86)/LLVM/include")
-	set(CLANG_LIBDIR "C:/Program Files (x86)/LLVM/lib")
-endif()
+set(CMAKE_CXX_STANDARD 14)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 find_package(LibClang REQUIRED)
-include_directories(${CLANG_INCLUDEDIR})
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 add_library(libreflang STATIC lib/reflang.hpp lib/reflang.cpp)
+set_target_properties( libreflang PROPERTIES OUTPUT_NAME "reflang")
 
 add_executable(
 	reflang
@@ -38,6 +33,10 @@ add_executable(
 	gen/serializer.function.cpp gen/serializer.function.hpp
 	gen/serializer.util.cpp gen/serializer.util.hpp
 	gen/types.cpp gen/types.hpp)
-target_link_libraries(reflang ${CLANG_LIBS})
+target_link_libraries(reflang clang)
 
 add_subdirectory(tests)
+
+install(TARGETS reflang DESTINATION bin)
+install(TARGETS libreflang DESTINATION lib)
+install(FILES lib/reflang.hpp DESTINATION include)
