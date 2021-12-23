@@ -389,18 +389,8 @@ Reference Class<%name%>::GetField(const Reference& r, const std::string& name) c
 	if (!c.Fields.empty())
 	{
 		tmpl << R"(
-	if (r.IsT<%name%>())
-	{
 		%name%& o = r.GetT<%name%>();
-%get_field_impl%	}
-	else if (r.IsT<const %name%>())
-	{
-		const %name%& o = r.GetT<const %name%>();
-%get_field_impl%	}
-	else
-	{
-		throw Exception("Invalid Reference passed to GetField().");
-	})";
+%get_field_impl%)";
 	}
 	tmpl << R"(
 	throw Exception("Invalid name passed to GetField().");
