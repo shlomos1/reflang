@@ -35,6 +35,11 @@ add_executable(
 	gen/types.cpp gen/types.hpp)
 target_link_libraries(reflang clang)
 
+if(MSVC)
+	set_target_properties(reflang PROPERTIES MSVC_RUNTIME_LIBRARY MultiThreadedDLL)
+	target_compile_definitions(reflang PRIVATE -D_ITERATOR_DEBUG_LEVEL=0)
+endif()
+
 add_subdirectory(tests)
 
 install(TARGETS reflang DESTINATION bin)
