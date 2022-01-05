@@ -98,6 +98,7 @@ Parameter Function<void(*)(int), Func>::GetParameter(int i) const
 	default:
 		break;
 	}
+
 	return result;
 }
 
@@ -164,6 +165,7 @@ Parameter Function<void(*)(float), Func>::GetParameter(int i) const
 	default:
 		break;
 	}
+
 	return result;
 }
 
@@ -230,6 +232,7 @@ Parameter Function<bool(*)(const char &), Func>::GetParameter(int i) const
 	default:
 		break;
 	}
+
 	return result;
 }
 

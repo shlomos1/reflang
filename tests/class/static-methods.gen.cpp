@@ -171,6 +171,7 @@ Parameter Function<void(*)(int), MyClass::Method1>::GetParameter(int i) const
 	default:
 		break;
 	}
+
 	return result;
 }
 
@@ -292,6 +293,7 @@ Parameter Function<bool(*)(bool, int), MyClass::RMethod1>::GetParameter(int i) c
 	default:
 		break;
 	}
+
 	return result;
 }
 
