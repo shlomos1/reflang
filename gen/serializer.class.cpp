@@ -385,15 +385,14 @@ int Class<%name%>::GetFieldCount() const
 }
 
 Reference Class<%name%>::GetField(const Reference& r, const std::string& name) const
-{)";
+{
+)";
 	if (!c.Fields.empty())
 	{
-		tmpl << R"(
-		%name%& o = r.GetT<%name%>();
+		tmpl << R"(		%name%& o = r.GetT<%name%>();
 %get_field_impl%)";
 	}
-	tmpl << R"(
-	throw Exception("Invalid name passed to GetField().");
+	tmpl << R"(	throw Exception("Invalid name passed to GetField().");
 }
 
 int Class<%name%>::GetStaticFieldCount() const

@@ -24,26 +24,11 @@ int Class<MyClass::Subclass>::GetFieldCount() const
 
 Reference Class<MyClass::Subclass>::GetField(const Reference& r, const std::string& name) const
 {
-	if (r.IsT<MyClass::Subclass>())
-	{
 		MyClass::Subclass& o = r.GetT<MyClass::Subclass>();
 		if (name == "field")
 		{
 			return Reference(o.field);
 		}
-	}
-	else if (r.IsT<const MyClass::Subclass>())
-	{
-		const MyClass::Subclass& o = r.GetT<const MyClass::Subclass>();
-		if (name == "field")
-		{
-			return Reference(o.field);
-		}
-	}
-	else
-	{
-		throw Exception("Invalid Reference passed to GetField().");
-	}
 	throw Exception("Invalid name passed to GetField().");
 }
 
