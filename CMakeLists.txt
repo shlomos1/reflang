@@ -9,8 +9,10 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 set(CMAKE_CXX_STANDARD 14)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-find_package(LibClang REQUIRED)
+if(CLANG_ROOT)
+	set(Clang_ROOT ${CLANG_ROOT})
+endif()
+find_package(Clang REQUIRED CONFIG)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -33,7 +35,8 @@ add_executable(
 	gen/serializer.function.cpp gen/serializer.function.hpp
 	gen/serializer.util.cpp gen/serializer.util.hpp
 	gen/types.cpp gen/types.hpp)
-target_link_libraries(reflang clang)
+target_link_libraries(reflang libclang)
+target_include_directories(reflang PRIVATE ${CLANG_INCLUDE_DIRS})
 
 if(MSVC)
 	set_target_properties(reflang PROPERTIES MSVC_RUNTIME_LIBRARY MultiThreadedDLL)
