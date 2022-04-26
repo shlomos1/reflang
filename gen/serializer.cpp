@@ -1,5 +1,9 @@
 #include "serializer.hpp"
 
+#if WIN32
+#include <filesystem>
+#endif
+
 #include <fstream>
 #include <locale>
 #include <unordered_set>
@@ -61,7 +65,15 @@ namespace
 		unordered_set<string> headers;
 		for (const auto& type : types)
 		{
+#if WIN32
+			std::filesystem::path path(type->GetFile());
+			if(path.is_absolute())
+				headers.insert(R"(\\?\)"+type->GetFile());
+			else
+				headers.insert(type->GetFile());
+#else
 			headers.insert(type->GetFile());
+#endif
 		}
 		for (const auto& header : headers)
 		{
