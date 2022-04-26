@@ -37,6 +37,7 @@ add_executable(
 	gen/types.cpp gen/types.hpp)
 target_link_libraries(reflang libclang)
 target_include_directories(reflang PRIVATE ${CLANG_INCLUDE_DIRS})
+set_target_properties(reflang PROPERTIES CXX_STANDARD 17)
 
 if(MSVC)
 	set_target_properties(reflang PROPERTIES MSVC_RUNTIME_LIBRARY MultiThreadedDLL)
